@@ -3,7 +3,9 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import "package:movieticket/screens/seatselection.dart";
 import "package:movieticket/utils/color.dart";
+import "package:movieticket/utils/pickimage.dart";
 import 'package:readmore/readmore.dart';
 
 class Moviedetails extends StatefulWidget {
@@ -15,6 +17,9 @@ class Moviedetails extends StatefulWidget {
 }
 
 class _MoviedetailsState extends State<Moviedetails> {
+  int cinemaindex = -1;
+  bool theatreselected = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +55,7 @@ class _MoviedetailsState extends State<Moviedetails> {
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: greycolorshade1,
+                      color: greycolorshade1.withOpacity(0.8),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,195 +161,349 @@ class _MoviedetailsState extends State<Moviedetails> {
               padding: const EdgeInsets.symmetric(horizontal: 23.0),
               child: Container(
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const Text("Movie genre:",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFFBFBFBF),
-                              )),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            '${widget.snap["Type of movie"][0]}, ${widget.snap["Type of movie"][1]}, ${widget.snap["Type of movie"][2]}',
-                            style: const TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const Text("Censorship:",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFFBFBFBF),
-                              )),
-                          const SizedBox(
-                            width: 23,
-                          ),
-                          Text(
-                            '${widget.snap["censorship"]}',
-                            style: const TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const Text("Language",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFFBFBFBF),
-                              )),
-                          const SizedBox(
-                            width: 35,
-                          ),
-                          Text(
-                            '${widget.snap["Languages"][0]}, ${widget.snap["Languages"][1]} ',
-                            style: const TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const Text(
-                        "Storyline",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ReadMoreText(
-                        '${widget.snap["description"]}',
-                        textAlign: TextAlign.justify,
-                        trimLines: 4,
-                        trimCollapsedText: "See more",
-                        moreStyle: const TextStyle(color: appthemecolor),
-                        lessStyle: const TextStyle(color: appthemecolor),
-                        trimExpandedText: "See less",
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      //actor data
-                      const Text(
-                        "Actor",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        height: 60.h,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: widget.snap["Actordata"].length,
-                            itemBuilder: (context, index) {
-                              var actorData = widget.snap["Actordata"][index];
-                              var actorName = actorData.keys.first;
-                              var actorImage = actorData[actorName];
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 10.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: greycolorshade1,
-                                  ),
-                                  padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
-                                  child: Row(
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 17,
-                                        backgroundImage: NetworkImage(actorImage),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      SizedBox(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Text("Movie genre:",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFFBFBFBF),
+                            )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          '${widget.snap["Type of movie"][0]}, ${widget.snap["Type of movie"][1]}',
+                          style: const TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const Text("Censorship:",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFFBFBFBF),
+                            )),
+                        const SizedBox(
+                          width: 23,
+                        ),
+                        Text(
+                          '${widget.snap["censorship"]}',
+                          style: const TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const Text("Language",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFFBFBFBF),
+                            )),
+                        const SizedBox(
+                          width: 35,
+                        ),
+                        Text(
+                          '${widget.snap["Languages"][0]}, ${widget.snap["Languages"][1]} ',
+                          style: const TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    const Text(
+                      "Storyline",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ReadMoreText(
+                      '${widget.snap["description"]}',
+                      textAlign: TextAlign.justify,
+                      trimLines: 4,
+                      trimCollapsedText: "See more",
+                      moreStyle: const TextStyle(color: appthemecolor),
+                      lessStyle: const TextStyle(color: appthemecolor),
+                      trimExpandedText: "See less",
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    //actor data
+                    const Text(
+                      "Actor",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      height: 60.h,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: widget.snap["Actordata"].length,
+                          itemBuilder: (context, index) {
+                            var actorData = widget.snap["Actordata"][index];
+                            var actorName = actorData.keys.first;
+                            var actorImage = actorData[actorName];
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 10.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: greycolorshade1,
+                                ),
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 5, 20, 5),
+                                child: Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 20,
+                                      backgroundImage: NetworkImage(actorImage),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    SizedBox(
                                       width: 60,
-                                        child: Text(
-                                          actorName,
-                                          maxLines: 2,
-                                          textAlign: TextAlign.justify,
-                                          style: TextStyle(fontSize: 14,color:primaryColor ,
+                                      child: Text(
+                                        actorName,
+                                        maxLines: 2,
+                                        textAlign: TextAlign.justify,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: primaryColor,
                                           overflow: TextOverflow.clip,
-                                          ),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            }),
-                      ),
-                       const SizedBox(
-                        height: 20,
-                      ),
-                        //director data
-                      const Text(
-                        "Director",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        height: 60.h,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: widget.snap["Directordata"].length,
-                            itemBuilder: (context, index) {
-                              var actorData = widget.snap["Directordata"][index];
-                              var actorName = actorData.keys.first;
-                              var actorImage = actorData[actorName];
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 10.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: greycolorshade1,
-                                  ),
-                                  padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
-                                  child: Row(
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 17,
-                                        backgroundImage: NetworkImage(actorImage),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      SizedBox(
+                              ),
+                            );
+                          }),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    //director data
+                    const Text(
+                      "Director",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      height: 60.h,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: widget.snap["Directordata"].length,
+                          itemBuilder: (context, index) {
+                            var actorData = widget.snap["Directordata"][index];
+                            var actorName = actorData.keys.first;
+                            var actorImage = actorData[actorName];
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 10.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: greycolorshade1,
+                                ),
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 5, 20, 5),
+                                child: Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 20,
+                                      backgroundImage: NetworkImage(actorImage),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    SizedBox(
                                       width: 60,
-                                        child: Text(
-                                          actorName,
-                                          maxLines: 2,
-                                          textAlign: TextAlign.justify,
-                                          style: TextStyle(fontSize: 14,color:primaryColor ,
+                                      child: Text(
+                                        actorName,
+                                        maxLines: 2,
+                                        textAlign: TextAlign.justify,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: primaryColor,
                                           overflow: TextOverflow.clip,
-                                          ),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            }),
+                              ),
+                            );
+                          }),
+                    ),
+                    //mall for movie ticket
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      "Cinema",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    FutureBuilder(
+                        future: FirebaseFirestore.instance
+                            .collection("cinema")
+                            .where("movies",
+                                arrayContains: widget.snap["moviename"])
+                            .get(),
+                        builder: (context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          return SizedBox(
+                            height: snapshot.data!.docs.length * 85,
+                            child: ListView.builder(
+                              padding: const EdgeInsets.all(0),
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      cinemaindex = index;
+                                      theatreselected = true;
+                                      setState(() {});
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: cinemaindex == index
+                                              ? appthemecolor
+                                              : Colors.transparent,
+                                        ),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10)),
+                                        color: cinemaindex == index
+                                            ? appthemecolor.withOpacity(0.2)
+                                            : greycolorshade1,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  snapshot.data!.docs[index]
+                                                      ["name"],
+                                                  style: const TextStyle(
+                                                      fontSize: 17,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                              ClipRRect(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(5)),
+                                                  child: Image.network(
+                                                    snapshot.data!.docs[index]
+                                                        ["logo"],
+                                                    height: 30.h,
+                                                    width: 40.w,
+                                                    fit: BoxFit.fill,
+                                                  ))
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                snapshot.data!.docs[index]
+                                                        ["distance"] +
+                                                    'km' +
+                                                    "  |   ",
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 11),
+                                              ),
+                                              Text(
+                                                snapshot.data!.docs[index]
+                                                    ["address"],
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 11),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }),
+                    //movieticket button
+                    GestureDetector(
+                      onTap: () {
+                        if (theatreselected) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => SeatSelection(
+                                    snap: widget.snap,
+                                  )));
+                        }else{
+                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  content: Text('Please select theatre',style: TextStyle(color: appthemecolor),),duration: Duration(seconds: 2 ),behavior: SnackBarBehavior.floating,backgroundColor: greycolorshade1,
+));
+                        }
+                      },
+                      child: Container(
+                        height: 55.h,
+                        width: double.infinity,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.horizontal(
+                              left: Radius.circular(30),
+                              right: Radius.circular(30)),
+                          color: appthemecolor,
+                        ),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          "Continue",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
-                    ]),
+                    ),
+                  ],
+                ),
               ),
             ),
           ]))

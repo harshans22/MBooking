@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:movieticket/models/moviedata.dart';
 import 'package:movieticket/screens/homescreen.dart';
-import 'package:movieticket/screens/upload(only_for_admin).dart/upload.dart';
+import 'package:movieticket/screens/seatselection.dart';
+import 'package:movieticket/screens/upload(only_for_admin).dart/upload2.dart';
 import 'package:movieticket/utils/dimension.dart';
 import 'firebase_options.dart';
 import 'package:movieticket/utils/color.dart';
