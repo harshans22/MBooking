@@ -5,7 +5,6 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import "package:movieticket/screens/seatselection.dart";
 import "package:movieticket/utils/color.dart";
-import "package:movieticket/utils/pickimage.dart";
 import 'package:readmore/readmore.dart';
 
 class Moviedetails extends StatefulWidget {
@@ -19,6 +18,9 @@ class Moviedetails extends StatefulWidget {
 class _MoviedetailsState extends State<Moviedetails> {
   int cinemaindex = -1;
   bool theatreselected = false;
+  String theatrename = "";
+  String theatreaddress = "";
+  String theatreIcon = "";
 
   @override
   Widget build(BuildContext context) {
@@ -394,6 +396,12 @@ class _MoviedetailsState extends State<Moviedetails> {
                                   child: GestureDetector(
                                     onTap: () {
                                       cinemaindex = index;
+                                      theatrename = snapshot
+                                          .data!.docs[cinemaindex]["name"];
+                                      theatreaddress = snapshot
+                                          .data!.docs[cinemaindex]["address"];
+                                      theatreIcon = snapshot
+                                          .data!.docs[cinemaindex]["logo"];
                                       theatreselected = true;
                                       setState(() {});
                                     },
@@ -476,11 +484,21 @@ class _MoviedetailsState extends State<Moviedetails> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => SeatSelection(
                                     snap: widget.snap,
+                                    theatrename: theatrename,
+                                    theatreAddress: theatreaddress,
+                                    theatreLogo: theatreIcon,
                                   )));
-                        }else{
-                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-  content: Text('Please select theatre',style: TextStyle(color: appthemecolor),),duration: Duration(seconds: 2 ),behavior: SnackBarBehavior.floating,backgroundColor: greycolorshade1,
-));
+                        } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text(
+                              'Please select theatre',
+                              style: TextStyle(color: appthemecolor),
+                            ),
+                            duration: Duration(seconds: 2),
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: greycolorshade1,
+                          ));
                         }
                       },
                       child: Container(

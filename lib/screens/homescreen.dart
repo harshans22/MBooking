@@ -64,7 +64,7 @@ class _HomescreenState extends State<Homescreen> {
                     borderRadius: BorderRadius.circular(5),
                     borderSide: BorderSide.none,
                   ),
-                  fillColor: Color(0xFF1C1C1C),
+                  fillColor: const Color(0xFF1C1C1C),
                   filled: true,
                 ),
               ),
