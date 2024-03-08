@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movieticket/screens/startscreen.dart';
 import 'package:movieticket/utils/color.dart';
 import 'package:movieticket/widgets/coming_soon.dart';
 import 'package:movieticket/widgets/movie_card(homeScreen).dart';
@@ -15,6 +17,7 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +42,18 @@ class _HomescreenState extends State<Homescreen> {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: ()async {
+               
+    await FirebaseAuth.instance.signOut();
+    if (context.mounted) {
+                                                Navigator.of(context)
+                                                    .pushReplacement(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                StartScreen()));
+                                              }
+
+              },
               icon: SvgPicture.asset("assets/notification.svg")),
           const SizedBox(
             width: 4,

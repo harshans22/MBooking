@@ -1,18 +1,119 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movieticket/screens/homescreen.dart';
 import 'package:movieticket/utils/color.dart';
+import 'package:pinput/pinput.dart';
 
 class ConfirmOTP extends StatefulWidget {
-  const ConfirmOTP({super.key});
+  final String phonenumber;
+  final String verificationId;
+
+  const ConfirmOTP(
+      {super.key, required this.phonenumber, required this.verificationId});
 
   @override
   State<ConfirmOTP> createState() => _ConfirmOTPState();
 }
 
 class _ConfirmOTPState extends State<ConfirmOTP> {
-  final List<TextEditingController> _textControllers =
-      List.generate(6, (i) => TextEditingController());
+  final pinController = TextEditingController();
+  final focusNode = FocusNode();
+  bool _isloading = false;
+  final formKey = GlobalKey<FormState>();
+  Widget otpScreen() {
+    const focusedBorderColor = appthemecolor;
+    const fillColor = Color.fromRGBO(243, 246, 249, 0);
+    const borderColor = appthemecolor;
+
+    final defaultPinTheme = PinTheme(
+      width: 48.w,
+      height: 60.h,
+      textStyle: const TextStyle(
+        fontSize: 22,
+        color: Color.fromRGBO(248, 248, 248, 1),
+      ),
+      decoration: BoxDecoration(
+        color: appthemecolor.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: borderColor),
+      ),
+    );
+
+    /// Optionally you can use form to validate the Pinput
+    return Form(
+      key: formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Directionality(
+            // Specify direction if desired
+            textDirection: TextDirection.ltr,
+            child: Pinput(
+              length: 6,
+              controller: pinController,
+              focusNode: focusNode,
+              // androidSmsAutofillMethod:
+              //  AndroidSmsAutofillMethod.smsUserConsentApi,
+              listenForMultipleSmsOnAndroid: false,
+              defaultPinTheme: defaultPinTheme,
+              separatorBuilder: (index) => const SizedBox(width: 8),
+              // validator: (value) {
+              //   return value == '2222' ? null : 'Pin is incorrect';
+              // },
+              // onClipboardFound: (value) {
+              //   debugPrint('onClipboardFound: $value');
+              //   pinController.setText(value);
+              // },
+              hapticFeedbackType: HapticFeedbackType.lightImpact,
+              // onCompleted: (pin) {
+              //   debugPrint('onCompleted: $pin');
+              // },
+              // onChanged: (value) {
+              //   debugPrint('onChanged: $value');
+              // },
+              cursor: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 9),
+                    width: 22,
+                    height: 1,
+                    color: focusedBorderColor,
+                  ),
+                ],
+              ),
+              focusedPinTheme: defaultPinTheme.copyWith(
+                decoration: defaultPinTheme.decoration!.copyWith(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: focusedBorderColor),
+                ),
+              ),
+              submittedPinTheme: defaultPinTheme.copyWith(
+                decoration: defaultPinTheme.decoration!.copyWith(
+                  color: fillColor,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: focusedBorderColor),
+                ),
+              ),
+              errorPinTheme: defaultPinTheme.copyBorderWith(
+                border: Border.all(color: Colors.redAccent),
+              ),
+            ),
+          ),
+          // TextButton(
+          //   onPressed: () {
+          //    // focusNode.unfocus();
+          //     formKey.currentState!.validate();
+          //   },
+          //   child: const Text('Validate'),
+          // ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,69 +137,36 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
               const SizedBox(
                 height: 18,
               ),
-              const Text(
-                "You just need to enter the OTP sent to the registered phone number 9119922076",
-                style: TextStyle(height: 1.4, fontWeight: FontWeight.w400),
+               Text(
+                'You just need to enter the OTP sent to the registered phone number ${widget.phonenumber}',
+                style:const TextStyle(height: 1.4, fontWeight: FontWeight.w400),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 35),
-                child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween, // Improved spacing
-                  children: [
-                    for (int i = 0; i < 6; i++) // Iterate 6 times
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: SizedBox(
-                            height: 80,
-                            child: TextField(
-                              key: ValueKey(i),
-                              controller: _textControllers[i],
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700, fontSize: 25),
-                              onChanged: (value) {
-                                if (value.isNotEmpty && value.length == 1) {
-                                  if (i + 1 < 6) {
-
-                                    FocusScope.of(context)
-                                        .nextFocus(); // Move focus forward
-                                  }
-                                } else if ( i > 0) {
-                                
-                                  FocusScope.of(context)
-                                      .previousFocus(); // Move focus back on backspace
-                                  _textControllers[i]
-                                      .clear(); // Clear previous field on backspace
-                                }
-                              },
-                              textAlign: TextAlign.center,
-                              decoration: InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 15),
-                                border: OutlineInputBorder(),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: appthemecolor),
-                                ),
-                                fillColor: appthemecolor.withOpacity(0.2),
-                                filled: true,
-                              ),
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(1),
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
+                child: otpScreen(),
               ),
               Flexible(flex: 5, child: Container()),
               InkWell(
-                  onTap: () {}, child: SvgPicture.asset("assets/continue.svg")),
-              Flexible(flex: 1, child: Container()),
+                  onTap: () {
+                    setState(() {
+                      _isloading = true;
+                    });
+                    try {
+                      PhoneAuthCredential credential =
+                          PhoneAuthProvider.credential(
+                              verificationId: widget.verificationId,
+                              smsCode: pinController.text);
+                      FirebaseAuth.instance
+                          .signInWithCredential(credential)
+                          .then((value) => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Homescreen())));
+                    } catch (err) {
+                      print(err.toString());
+                    }
+                  },
+                  child:_isloading?const CircularProgressIndicator(color: Colors.black,): SvgPicture.asset("assets/continue.svg")),
             ],
           ),
         ),
