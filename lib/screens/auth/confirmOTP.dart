@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movieticket/screens/auth/registration.dart';
 import 'package:movieticket/screens/homescreen.dart';
 import 'package:movieticket/utils/color.dart';
+import 'package:movieticket/utils/pickimage.dart';
 import 'package:pinput/pinput.dart';
 
 class ConfirmOTP extends StatefulWidget {
@@ -137,9 +139,10 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
               const SizedBox(
                 height: 18,
               ),
-               Text(
+              Text(
                 'You just need to enter the OTP sent to the registered phone number ${widget.phonenumber}',
-                style:const TextStyle(height: 1.4, fontWeight: FontWeight.w400),
+                style:
+                    const TextStyle(height: 1.4, fontWeight: FontWeight.w400),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 35),
@@ -158,15 +161,39 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                               smsCode: pinController.text);
                       FirebaseAuth.instance
                           .signInWithCredential(credential)
-                          .then((value) => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Homescreen())));
+                          .then((value) {
+                        showSnackBar("OTP verified successfully", context);
+                        return Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RegistrationScreen()));
+                      });
                     } catch (err) {
                       print(err.toString());
                     }
                   },
-                  child:_isloading?const CircularProgressIndicator(color: Colors.black,): SvgPicture.asset("assets/continue.svg")),
+                  child:   Container(
+                        height: 55.h,
+                        width: double.infinity,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.horizontal(
+                              left: Radius.circular(30),
+                              right: Radius.circular(30)),
+                          color: appthemecolor,
+                        ),
+                        alignment: Alignment.center,
+                        child: _isloading
+                      ? const CircularProgressIndicator(
+                          color: Colors.black,
+                        )
+                      :const Text(
+                          "Verify OTP",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),),
             ],
           ),
         ),

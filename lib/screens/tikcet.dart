@@ -76,9 +76,9 @@ class _ticketScreenState extends State<ticketScreen> {
                               ),
                               Text(
                                 widget.snap["moviename"],
-                                style: const TextStyle(
+                                style:  TextStyle(
                                     color: Colors.black,
-                                    fontSize: 18,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.w600),
                               ),
                               SizedBox(
@@ -95,9 +95,9 @@ class _ticketScreenState extends State<ticketScreen> {
                                   ),
                                   Text(
                                       '${widget.snap["TimeInHours"]} hours ${widget.snap["TimeInMin"]} minutes',
-                                      style: const TextStyle(
+                                      style:  TextStyle(
                                           color: Colors.black,
-                                          fontSize: 13,
+                                          fontSize: 13.sp,
                                           fontWeight: FontWeight.w400))
                                 ],
                               ),
@@ -118,9 +118,9 @@ class _ticketScreenState extends State<ticketScreen> {
                                     child: Text(
                                         '${widget.snap["Type of movie"][0]}, ${widget.snap["Type of movie"][1]}',
                                         maxLines: 2,
-                                        style: const TextStyle(
+                                        style:  TextStyle(
                                             color: Colors.black,
-                                            fontSize: 13,
+                                            fontSize: 13.sp,
                                             fontWeight: FontWeight.w400)),
                                   )
                                 ],
@@ -142,7 +142,7 @@ class _ticketScreenState extends State<ticketScreen> {
                                 SvgPicture.asset(
                                   "assets/calendar.svg",
                                   color: Color.fromARGB(255, 88, 87, 87),
-                                  height: 40,
+                                  height: 40.h,
                                 ),
                                 SizedBox(
                                   width: 5.w,
@@ -152,9 +152,9 @@ class _ticketScreenState extends State<ticketScreen> {
                                   children: [
                                     Text(
                                       widget.time,
-                                      style: const TextStyle(
+                                      style:  TextStyle(
                                           color: Colors.black,
-                                          fontSize: 14,
+                                          fontSize: 14.sp,
                                           fontWeight: FontWeight.w500),
                                     ),
                                     SizedBox(
@@ -162,9 +162,9 @@ class _ticketScreenState extends State<ticketScreen> {
                                     ),
                                     Text(
                                       '${widget.date}.02.2024',
-                                      style: const TextStyle(
+                                      style:  TextStyle(
                                           color: Colors.black,
-                                          fontSize: 14,
+                                          fontSize: 14.sp,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ],
@@ -177,7 +177,7 @@ class _ticketScreenState extends State<ticketScreen> {
                               children: [
                                 SvgPicture.asset(
                                   "assets/Seat Cinema.svg",
-                                  height: 40,
+                                  height: 40.h,
                                 ),
                                 SizedBox(
                                   width: 5.w,
@@ -185,11 +185,11 @@ class _ticketScreenState extends State<ticketScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
+                                     Text(
                                       "Screen 4",
                                       style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 14,
+                                          fontSize: 14.sp,
                                           fontWeight: FontWeight.w500),
                                     ),
                                     SizedBox(
@@ -197,20 +197,20 @@ class _ticketScreenState extends State<ticketScreen> {
                                     ),
                                     Row(
                                       children: [
-                                        const Text(
+                                         Text(
                                           'Seat ',
                                           style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 14,
+                                              fontSize: 14.sp,
                                               fontWeight: FontWeight.w500),
                                         ),
                                         ...List.generate(
                                           widget.seat.length,
                                           (index) => Text(
                                             '${widget.seat[index]}, ',
-                                            style: const TextStyle(
+                                            style:  TextStyle(
                                                 color: Colors.black,
-                                                fontSize: 14,
+                                                fontSize: 14.sp,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         ),
@@ -240,10 +240,10 @@ class _ticketScreenState extends State<ticketScreen> {
                           ),
                           Text(
                             '₹${widget.price}.000',
-                            style: const TextStyle(
+                            style:  TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16),
+                                fontSize: 16.sp),
                           )
                         ],
                       ),
@@ -256,7 +256,7 @@ class _ticketScreenState extends State<ticketScreen> {
                           SvgPicture.asset(
                             "assets/location.svg",
                             color: Colors.black,
-                            height: 25,
+                            height: 25.h,
                           ),
                           SizedBox(
                             width: 10.w,
@@ -268,10 +268,10 @@ class _ticketScreenState extends State<ticketScreen> {
                                 children: [
                                   Text(
                                     widget.theatre,
-                                    style: const TextStyle(
+                                    style:  TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 16),
+                                        fontSize: 16.sp),
                                   ),
                                   SizedBox(
                                     width: 5.w,
@@ -286,8 +286,8 @@ class _ticketScreenState extends State<ticketScreen> {
                               ),
                               Text(
                                 widget.theatreAdress,
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 14),
+                                style:  TextStyle(
+                                    color: Colors.black, fontSize: 14.sp),
                               ),
                             ],
                           )

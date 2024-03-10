@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movieticket/utils/color.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
+
 
 class PaymentScreen extends StatefulWidget {
   final snap;
@@ -151,58 +150,58 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           children: [
                             Text(
                               widget.snap["moviename"],
-                              style: const TextStyle(
-                                  fontSize: 18,
+                              style:  TextStyle(
+                                  fontSize: 20.sp,
                                   color: appthemecolor,
                                   fontWeight: FontWeight.w700),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
+                         SizedBox(
+                          height: 10.h,
                         ),
                         Row(
                           children: [
                             SvgPicture.asset("assets/video-play.svg"),
-                            const SizedBox(
-                              width: 10,
+                             SizedBox(
+                              width: 10.w,
                             ),
                             Text(
                               '${widget.snap["Type of movie"][0]}, ${widget.snap["Type of movie"][1]}',
-                              style: const TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w400),
+                              style:  TextStyle(
+                                  fontSize: 13.sp, fontWeight: FontWeight.w400),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 8,
+                         SizedBox(
+                          height: 8.h,
                         ),
                         Row(
                           children: [
                             SvgPicture.asset("assets/location.svg"),
-                            const SizedBox(
-                              width: 10,
+                             SizedBox(
+                              width: 10.w,
                             ),
                             Text(
                               widget.theatrename,
-                              style: const TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w400),
+                              style:  TextStyle(
+                                  fontSize: 13.sp, fontWeight: FontWeight.w400),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 8,
+                         SizedBox(
+                          height: 8.h,
                         ),
                         Row(
                           children: [
                             SvgPicture.asset("assets/clock.svg"),
-                            const SizedBox(
-                              width: 10,
+                             SizedBox(
+                              width: 10.w,
                             ),
                             Text(
                               '${widget.date}.02.2024  • ${widget.time}',
-                              style: const TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w400),
+                              style:  TextStyle(
+                                  fontSize: 13.sp, fontWeight: FontWeight.w400),
                             ),
                           ],
                         ),
@@ -217,11 +216,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                   Text(
                     "Order ID",
                     style: TextStyle(
                         color: primaryColor,
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w400),
                   ),
                   Text(
@@ -239,11 +238,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                   Text(
                     "Seat",
                     style: TextStyle(
                         color: primaryColor,
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w400),
                   ),
                   Row(
@@ -252,18 +251,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         widget.seat.length - 1,
                         (index) => Text(
                           '${widget.seat[index]}, ',
-                          style: const TextStyle(
+                          style:  TextStyle(
                             color: primaryColor,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
                       Text(
                         '${widget.seat[widget.seat.length - 1]} ',
-                        style: const TextStyle(
+                        style:  TextStyle(
                           color: primaryColor,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       )
@@ -293,10 +292,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           SizedBox(
                             width: 10.w,
                           ),
-                          const Text(
+                           Text(
                             "discount code",
                             style: TextStyle(
-                                color: Color(0xFF949494), fontSize: 15),
+                                color: Color(0xFF949494), fontSize: 15.sp),
                           ),
                         ],
                       ),
@@ -311,11 +310,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         alignment: Alignment.center,
-                        child: const Text(
+                        child:  Text(
                           "Apply",
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 16,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -338,9 +337,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   const Text("Total"),
                   Text(
                     '₹${widget.amount}.000',
-                    style: const TextStyle(
+                    style:  TextStyle(
                         color: appthemecolor,
-                        fontSize: 18,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.w700),
                   )
                 ],
@@ -348,9 +347,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
               SizedBox(
                 height: 5.h,
               ),
-              const Text(
+               Text(
                 "Payment Method",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
               ),
               SizedBox(
                 height: 15.h,
@@ -361,36 +360,37 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 decoration: BoxDecoration(
                     color: greycolorshade1,
                     borderRadius: BorderRadius.circular(10)),
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Container(
-                                color: Colors.white,
-                                padding: const EdgeInsets.all(10),
-                                child: Image.asset(
-                                  "assets/upi.webp",
-                                  height: 30.h,
-                                  width: 60.w,
-                                  fit: BoxFit.fill,
-                                )),
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                                       const Text(
-                            "Pay by any UPI app",
-                            style: TextStyle(fontSize: 14),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SvgPicture.asset("assets/arrow-right.svg",height: 20,)
-                  ],
-                ),
+                child:displayUpiApps()
+                // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     SizedBox(
+                //       child: Row(
+                //         children: [
+                //           ClipRRect(
+                //             borderRadius: BorderRadius.circular(10),
+                //             child: Container(
+                //                 color: Colors.white,
+                //                 padding: const EdgeInsets.all(10),
+                //                 child: Image.asset(
+                //                   "assets/upi.webp",
+                //                   height: 30.h,
+                //                   width: 60.w,
+                //                   fit: BoxFit.fill,
+                //                 )),
+                //           ),
+                //           SizedBox(
+                //             width: 8.w,
+                //           ),
+                //                         Text(
+                //             "Pay by any UPI app",
+                //             style: TextStyle(fontSize: 14.sp),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //     SvgPicture.asset("assets/arrow-right.svg",height: 20.h,)
+                //   ],
+                // ),
               ),
               SizedBox(
                 height: 15.h,
@@ -421,14 +421,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           SizedBox(
                             width: 8.w,
                           ),
-                                       const Text(
+                                        Text(
                             "Pay Via any Debit/Credit Card",
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(fontSize: 14.sp),
                           ),
                         ],
                       ),
                     ),
-                    SvgPicture.asset("assets/arrow-right.svg",height: 20,)
+                    SvgPicture.asset("assets/arrow-right.svg",height: 20.h,)
                   ],
                 ),
               ),
@@ -461,14 +461,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           SizedBox(
                             width: 8.w,
                           ),
-                                       const Text(
+                                        Text(
                             "Pay through Net banking",
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(fontSize: 14.sp),
                           ),
                         ],
                       ),
                     ),
-                    SvgPicture.asset("assets/arrow-right.svg",height: 20,)
+                    SvgPicture.asset("assets/arrow-right.svg",height: 20.h,)
                   ],
                 ),
               ),
@@ -501,14 +501,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           SizedBox(
                             width: 8.w,
                           ),
-                                       const Text(
+                                        Text(
                             "Use any gift voucher",
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(fontSize: 14.sp),
                           ),
                         ],
                       ),
                     ),
-                    SvgPicture.asset("assets/arrow-right.svg",height: 20,)
+                    SvgPicture.asset("assets/arrow-right.svg",height: 20.h,)
                   ],
                 ),
               ),
@@ -541,11 +541,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             color: appthemecolor,
                           ),
                           alignment: Alignment.center,
-                          child: const Text(
+                          child:  Text(
                             "Continue",
                             style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 18,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w600),
                           ),
                         ),

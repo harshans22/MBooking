@@ -5,6 +5,7 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import "package:movieticket/screens/seatselection.dart";
 import "package:movieticket/utils/color.dart";
+import "package:movieticket/utils/pickimage.dart";
 import 'package:readmore/readmore.dart';
 
 class Moviedetails extends StatefulWidget {
@@ -489,16 +490,7 @@ class _MoviedetailsState extends State<Moviedetails> {
                                     theatreLogo: theatreIcon,
                                   )));
                         } else {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            content: Text(
-                              'Please select theatre',
-                              style: TextStyle(color: appthemecolor),
-                            ),
-                            duration: Duration(seconds: 2),
-                            behavior: SnackBarBehavior.floating,
-                            backgroundColor: greycolorshade1,
-                          ));
+                          showSnackBar("Please select theatre", context);
                         }
                       },
                       child: Container(

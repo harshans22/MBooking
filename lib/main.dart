@@ -1,10 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
-import 'package:movieticket/screens/auth/registration.dart';
-import 'package:movieticket/screens/homescreen.dart';
-import 'package:movieticket/screens/startscreen.dart';
+import 'package:movieticket/screens/splashscreen.dart';
 import 'package:movieticket/utils/dimension.dart';
 import 'firebase_options.dart';
 import 'package:movieticket/utils/color.dart';
@@ -16,7 +13,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-await FirebaseAppCheck.instance.activate();
+//await FirebaseAppCheck.instance.activate();
  
   runApp(const MyApp());
 }
@@ -56,8 +53,10 @@ class MyApp extends StatelessWidget {
 
               //       return const StartScreen();
               //     }),
-              home: RegistrationScreen(),
+              home: SplashScreen(),
                   );
         });
   }
 }
+
+

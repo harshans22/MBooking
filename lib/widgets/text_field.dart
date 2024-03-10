@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movieticket/utils/color.dart';
 
 class TextFieldInput extends StatelessWidget {
   final TextEditingController textEditingController;
@@ -9,18 +10,32 @@ class TextFieldInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final  inputBorder=OutlineInputBorder(
-          borderSide: Divider.createBorderSide(context)
-        );
+    
     return TextField(
+      cursorColor: appthemecolor,
       controller:textEditingController ,
       decoration:InputDecoration(
+        fillColor: greycolorshade1,
         hintText:hintText ,
-        border: inputBorder,
-        focusedBorder: inputBorder,
-        enabledBorder: inputBorder,
+       // hintStyle: TextStyle(color: appthemecolor.withOpacity(0.22)),
+        border: OutlineInputBorder(
+         
+          borderSide: Divider.createBorderSide(context),
+        ),
+        focusedBorder:const OutlineInputBorder(
+          
+           borderSide:  BorderSide(color: appthemecolor,),
+          ),
+          
+        
+        enabledBorder:const OutlineInputBorder(
+          
+        
+          
+        ), 
+        hintStyle: TextStyle(fontSize: 20),
         filled: true,
-        contentPadding:const EdgeInsets.all(8),
+        contentPadding:const EdgeInsets.all(20),
       ) ,
       keyboardType: textInputType,
       obscureText:isPass ,

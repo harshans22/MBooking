@@ -8,33 +8,35 @@ import 'package:movieticket/utils/color.dart';
 import 'package:movieticket/widgets/coming_soon.dart';
 import 'package:movieticket/widgets/movie_card(homeScreen).dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Homescreen extends StatefulWidget {
-  const Homescreen({super.key});
+  final String name;
+  const Homescreen({super.key, required this.name});
 
   @override
   State<Homescreen> createState() => _HomescreenState();
 }
 
 class _HomescreenState extends State<Homescreen> {
-  
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
-        title: const Column(
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Hi, Harsh 👋",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+              'Hi, ${widget.name} 👋',
+              style:const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
             ),
-            SizedBox(
+            const SizedBox(
               height: 4,
             ),
-            Text(
+            const Text(
               "Welcome back",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             )
@@ -42,17 +44,12 @@ class _HomescreenState extends State<Homescreen> {
         ),
         actions: [
           IconButton(
-              onPressed: ()async {
-               
-    await FirebaseAuth.instance.signOut();
-    if (context.mounted) {
-                                                Navigator.of(context)
-                                                    .pushReplacement(
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                StartScreen()));
-                                              }
-
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                if (context.mounted) {
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) =>const StartScreen()));
+                }
               },
               icon: SvgPicture.asset("assets/notification.svg")),
           const SizedBox(
@@ -100,7 +97,8 @@ class _HomescreenState extends State<Homescreen> {
                         style: TextStyle(
                             color: appthemecolor,
                             fontSize: 15,
-                            fontWeight: FontWeight.w400)),
+                            fontWeight: FontWeight.w400),
+                            ),
                   ),
                 ],
               ),
@@ -250,7 +248,6 @@ class _HomescreenState extends State<Homescreen> {
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) => Column(
                               children: [
-                                
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10.0),
@@ -261,16 +258,20 @@ class _HomescreenState extends State<Homescreen> {
                                         .data()["images"]),
                                   ),
                                 ),
-                              const  SizedBox(height: 5,),
-                                Text(snapshot
-                                        .data!.docs[index]
-                                        .data()["name"],style:const TextStyle(fontWeight: FontWeight.w400),),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  snapshot.data!.docs[index].data()["name"],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400),
+                                ),
                               ],
                             )),
                   );
                 }),
-                //movie news
-                            
+            //movie news
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
@@ -291,7 +292,7 @@ class _HomescreenState extends State<Homescreen> {
                 ],
               ),
             ),
-             StreamBuilder(
+            StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection("movie news")
                     .snapshots(),
@@ -309,24 +310,41 @@ class _HomescreenState extends State<Homescreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal:10.0),
-                          child: Stack(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Stack(
                                 children: [
                                   ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                    child: Image.network(snapshot.data!.docs[index].data()["titleimage"],height: 160.h,width: 220.w,fit: BoxFit.fill,)),
-                                    Container(
-                                      height: 160.h,
-                                      width: 230.h,
-                                      color: const Color.fromARGB(64, 13, 13, 13),
-                                    ),
-                                    Positioned(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Image.network(
+                                        snapshot.data!.docs[index]
+                                            .data()["titleimage"],
+                                        height: 160.h,
+                                        width: 220.w,
+                                        fit: BoxFit.fill,
+                                      )),
+                                  Container(
+                                    height: 160.h,
+                                    width: 230.h,
+                                    color: const Color.fromARGB(64, 13, 13, 13),
+                                  ),
+                                  Positioned(
                                       bottom: 0,
-                                      child: SizedBox( width: 220.w,
-                                        child: Text(snapshot.data!.docs[index].data()["title"],style:const TextStyle(fontSize: 14,fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis),maxLines: 2,))),
+                                      child: SizedBox(
+                                          width: 220.w,
+                                          child: Text(
+                                            snapshot.data!.docs[index]
+                                                .data()["title"],
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                            maxLines: 2,
+                                          ))),
                                 ],
                               ),
-                        )),
+                            )),
                   );
                 }),
           ],

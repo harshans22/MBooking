@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:movieticket/screens/auth/confirm.dart';
+import 'package:movieticket/screens/auth/confirmOTP.dart';
 import 'package:movieticket/utils/color.dart';
 
 class SignUp extends StatefulWidget {
@@ -115,7 +115,7 @@ class _SignUpState extends State<SignUp> {
               child: isloading
                   ? const CircularProgressIndicator(color:Colors.black)
                   : const Text(
-                      "Continue",
+                      "Send OTP",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 18,

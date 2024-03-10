@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movieticket/screens/auth/signin.dart';
 import 'package:movieticket/screens/auth/signup.dart';
 import 'package:movieticket/utils/color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,8 +46,8 @@ class _StartScreenState extends State<StartScreen>
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            const SizedBox(
-              height: 20,
+             SizedBox(
+              height: 20.h,
             ),
             SizedBox(
               width: double.infinity,
@@ -76,15 +78,15 @@ class _StartScreenState extends State<StartScreen>
               "MBooking hello!",
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800),
             ),
-            const SizedBox(
-              height: 10,
+             SizedBox(
+              height: 10.h,
             ),
             const Text(
               "Enjoy your favorite movies",
               style: TextStyle(fontWeight: FontWeight.w400),
             ),
-            const SizedBox(
-              height: 10,
+             SizedBox(
+              height: 10.h,
             ),
             TabPageSelector(
               controller: TabController(
@@ -101,7 +103,11 @@ class _StartScreenState extends State<StartScreen>
               height: MediaQuery.of(context).size.height * 0.04,
             ),
             InkWell(
-                onTap: () {}, child: SvgPicture.asset("assets/sign in.svg")),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginIn()));
+                },
+                child: SvgPicture.asset("assets/sign in.svg")),
             InkWell(
                 onTap: () {
                   Navigator.of(context).push(
