@@ -1,11 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movieticket/screens/payment.dart';
 import 'package:movieticket/utils/color.dart';
 
 class SeatSelection extends StatefulWidget {
   final snap;
-  const SeatSelection({super.key, required this.snap});
+  final String theatrename;
+ final String theatreAddress;
+ final String theatreLogo;
+
+  const SeatSelection(
+      {super.key, required this.snap, required this.theatrename,required this.theatreAddress,required this.theatreLogo});
 
   @override
   State<SeatSelection> createState() => _SeatSelectionState();
@@ -45,7 +51,21 @@ class _SeatSelectionState extends State<SeatSelection> {
               ),
               //buy button
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PaymentScreen(
+                              snap: widget.snap,
+                              amount: price,
+                              seat: selected,
+                              date: selecteddate,
+                              theatrename: widget.theatrename,
+                              time: selectedtime,
+                              theatreaddress:widget.theatreAddress,
+                              theatreicon:widget.theatreLogo,
+                              )));
+                },
                 child: Container(
                   height: 50.h,
                   width: 150.w,
@@ -91,11 +111,13 @@ class _SeatSelectionState extends State<SeatSelection> {
   int timeindex = 2;
   String selectedtime = "";
   List booked = [];
+  String selecteddate = "";
   @override
   void initState() {
     // TODO: implement initState
     selectedtime = widget.snap["timeOfshows"][timeindex];
     bookedseat(selectedtime);
+    selecteddate = date[dateindex][2];
     super.initState();
   }
 
@@ -106,6 +128,7 @@ class _SeatSelectionState extends State<SeatSelection> {
           .doc(selectedtime)
           .get();
       booked = snapshot["booked"];
+      setState(() {});
     } catch (err) {
       print(err.toString());
     }
@@ -119,16 +142,7 @@ class _SeatSelectionState extends State<SeatSelection> {
     [false, "Dec", '13'],
     [false, "Dec", '14']
   ];
-  List<List> time = [
-    ['9:50', false],
-    ['10:30', false],
-    ['12:00', false],
-    ['14:35', true],
-    ['17:15', false],
-    ['18:30', false],
-    ['19:50', false],
-    ['19:25', false]
-  ];
+ 
   int length =
       seat[0][0] + seat[1][0] + seat[2][0]; //for sized box of seat selection
   @override
@@ -380,6 +394,8 @@ class _SeatSelectionState extends State<SeatSelection> {
                             selectedtime =
                                 widget.snap["timeOfshows"][timeindex];
                             await bookedseat(selectedtime);
+                            
+                            selected = [];
                           }
                           setState(() {});
                         },
@@ -426,6 +442,7 @@ class _SeatSelectionState extends State<SeatSelection> {
                             date[index][0] = true;
                             date[dateindex][0] = false;
                             dateindex = index;
+                            selecteddate = date[dateindex][2];
                           }
                           setState(() {});
                         },

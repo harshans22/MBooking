@@ -47,6 +47,13 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   readmore: ^2.2.0
   date_picker_timeline: ^1.2.5
+  upi_india: ^3.0.1
+  pdf: ^3.10.8
+  pinput: ^4.0.0
+  firebase_app_check: ^0.2.1+8
+  lottie: ^2.7.0
+  shared_preferences: ^2.2.2
+ 
 
 dev_dependencies:
   flutter_test:

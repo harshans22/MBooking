@@ -19,6 +19,9 @@ class Moviedetails extends StatefulWidget {
 class _MoviedetailsState extends State<Moviedetails> {
   int cinemaindex = -1;
   bool theatreselected = false;
+  String theatrename = "";
+  String theatreaddress = "";
+  String theatreIcon = "";
 
   @override
   Widget build(BuildContext context) {
@@ -394,6 +397,12 @@ class _MoviedetailsState extends State<Moviedetails> {
                                   child: GestureDetector(
                                     onTap: () {
                                       cinemaindex = index;
+                                      theatrename = snapshot
+                                          .data!.docs[cinemaindex]["name"];
+                                      theatreaddress = snapshot
+                                          .data!.docs[cinemaindex]["address"];
+                                      theatreIcon = snapshot
+                                          .data!.docs[cinemaindex]["logo"];
                                       theatreselected = true;
                                       setState(() {});
                                     },
@@ -476,11 +485,12 @@ class _MoviedetailsState extends State<Moviedetails> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => SeatSelection(
                                     snap: widget.snap,
+                                    theatrename: theatrename,
+                                    theatreAddress: theatreaddress,
+                                    theatreLogo: theatreIcon,
                                   )));
-                        }else{
-                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-  content: Text('Please select theatre',style: TextStyle(color: appthemecolor),),duration: Duration(seconds: 2 ),behavior: SnackBarBehavior.floating,backgroundColor: greycolorshade1,
-));
+                        } else {
+                          showSnackBar("Please select theatre", context);
                         }
                       },
                       child: Container(
