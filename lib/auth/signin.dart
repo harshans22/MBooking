@@ -28,7 +28,8 @@ class _LoginInState extends State<LoginIn> {
     setState(() {
       isloading = true;
     });
-  //  ?Controller.text, password: _passwordcontroller.text);
+    String res = await AuthMethods().loginuser(
+        email: _emailController.text, password: _passwordcontroller.text);
     try {
       var usersnapshot = await FirebaseFirestore.instance
           .collection("Users")
@@ -46,14 +47,14 @@ class _LoginInState extends State<LoginIn> {
     setState(() {
       isloading = false;
     });
-    // if (res == "success") {
-    //   Navigator.of(context).pushReplacement(MaterialPageRoute(
-    //       builder: (context) => Homescreen(
-    //             name: name,
-    //           )));
-    // } else {
-    //   showSnackBar(res, context);
-    // }
+    if (res == "success") {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => Homescreen(
+                name: name,
+              )));
+    } else {
+      showSnackBar(res, context);
+    }
   }
 
   @override

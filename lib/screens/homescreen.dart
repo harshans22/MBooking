@@ -1,37 +1,56 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movieticket/screens/startscreen.dart';
+import 'package:movieticket/skeleton/movie_card_skeleton(homescreen).dart';
 import 'package:movieticket/utils/color.dart';
 import 'package:movieticket/widgets/coming_soon.dart';
 import 'package:movieticket/widgets/movie_card(homeScreen).dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Homescreen extends StatefulWidget {
-  const Homescreen({super.key, required String name});
+  final String name;
+  const Homescreen({super.key, required this.name});
 
   @override
   State<Homescreen> createState() => _HomescreenState();
 }
 
 class _HomescreenState extends State<Homescreen> {
+  bool _isloading = true;//for skeleton loader
+
+   @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 4), () {
+      setState(() {
+        _isloading = false;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    print("rebuld");
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
-        title: const Column(
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Hi, Harsh 👋",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+              'Hi, ${widget.name} 👋',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
             ),
-            SizedBox(
+            const SizedBox(
               height: 4,
             ),
-            Text(
+            const Text(
               "Welcome back",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             )
@@ -39,7 +58,13 @@ class _HomescreenState extends State<Homescreen> {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                if (context.mounted) {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const StartScreen()));
+                }
+              },
               icon: SvgPicture.asset("assets/notification.svg")),
           const SizedBox(
             width: 4,
@@ -64,7 +89,7 @@ class _HomescreenState extends State<Homescreen> {
                     borderRadius: BorderRadius.circular(5),
                     borderSide: BorderSide.none,
                   ),
-                  fillColor: Color(0xFF1C1C1C),
+                  fillColor: const Color(0xFF1C1C1C),
                   filled: true,
                 ),
               ),
@@ -82,11 +107,13 @@ class _HomescreenState extends State<Homescreen> {
                   )),
                   TextButton(
                     onPressed: () {},
-                    child: const Text("See all >",
-                        style: TextStyle(
-                            color: appthemecolor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400)),
+                    child: const Text(
+                      "See all >",
+                      style: TextStyle(
+                          color: appthemecolor,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400),
+                    ),
                   ),
                 ],
               ),
@@ -98,10 +125,11 @@ class _HomescreenState extends State<Homescreen> {
                 builder: (context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                         snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                  if (snapshot.connectionState == ConnectionState.waiting||_isloading) {
+                    return Shimmer.fromColors(
+                        baseColor: const Color.fromARGB(255, 47, 47, 47),
+                        highlightColor: Color.fromARGB(255, 92, 91, 91),
+                        child:const SkeletonMovieCard());
                   }
                   return CarouselSlider(
                     options: CarouselOptions(
@@ -142,7 +170,6 @@ class _HomescreenState extends State<Homescreen> {
                 ],
               ),
             ),
-
             StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection("coming soon")
@@ -236,7 +263,6 @@ class _HomescreenState extends State<Homescreen> {
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) => Column(
                               children: [
-                                
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10.0),
@@ -247,16 +273,20 @@ class _HomescreenState extends State<Homescreen> {
                                         .data()["images"]),
                                   ),
                                 ),
-                              const  SizedBox(height: 5,),
-                                Text(snapshot
-                                        .data!.docs[index]
-                                        .data()["name"],style:const TextStyle(fontWeight: FontWeight.w400),),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  snapshot.data!.docs[index].data()["name"],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400),
+                                ),
                               ],
                             )),
                   );
                 }),
-                //movie news
-                            
+            //movie news
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
@@ -277,7 +307,7 @@ class _HomescreenState extends State<Homescreen> {
                 ],
               ),
             ),
-             StreamBuilder(
+            StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection("movie news")
                     .snapshots(),
@@ -295,24 +325,41 @@ class _HomescreenState extends State<Homescreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal:10.0),
-                          child: Stack(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Stack(
                                 children: [
                                   ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                    child: Image.network(snapshot.data!.docs[index].data()["titleimage"],height: 160.h,width: 220.w,fit: BoxFit.fill,)),
-                                    Container(
-                                      height: 160.h,
-                                      width: 230.h,
-                                      color: const Color.fromARGB(64, 13, 13, 13),
-                                    ),
-                                    Positioned(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Image.network(
+                                        snapshot.data!.docs[index]
+                                            .data()["titleimage"],
+                                        height: 160.h,
+                                        width: 220.w,
+                                        fit: BoxFit.fill,
+                                      )),
+                                  Container(
+                                    height: 160.h,
+                                    width: 230.h,
+                                    color: const Color.fromARGB(64, 13, 13, 13),
+                                  ),
+                                  Positioned(
                                       bottom: 0,
-                                      child: SizedBox( width: 220.w,
-                                        child: Text(snapshot.data!.docs[index].data()["title"],style:const TextStyle(fontSize: 14,fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis),maxLines: 2,))),
+                                      child: SizedBox(
+                                          width: 220.w,
+                                          child: Text(
+                                            snapshot.data!.docs[index]
+                                                .data()["title"],
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                            maxLines: 2,
+                                          ))),
                                 ],
                               ),
-                        )),
+                            )),
                   );
                 }),
           ],

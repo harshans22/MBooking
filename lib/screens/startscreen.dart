@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:movieticket/screens/auth/signup.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movieticket/auth/signin.dart';
+import 'package:movieticket/auth/signup.dart';
 import 'package:movieticket/utils/color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movieticket/widgets/bottomsheet.dart';
-
 import 'package:movieticket/widgets/movie_card.dart';
 
 class StartScreen extends StatefulWidget {
@@ -45,12 +46,12 @@ class _StartScreenState extends State<StartScreen>
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-           const SizedBox(
-              height: 20,
+             SizedBox(
+              height: 20.h,
             ),
             SizedBox(
               width: double.infinity,
-              height: MediaQuery.of(context).size.height*0.4,
+              height: MediaQuery.of(context).size.height * 0.4,
               child: PageView.builder(
                 itemCount: sliderimages.length,
                 reverse: true,
@@ -64,7 +65,7 @@ class _StartScreenState extends State<StartScreen>
                   currentindex = value;
                   setState(() {});
                 },
-                physics:const BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return MovieCard(images: sliderimages, index: index);
                 },
@@ -73,19 +74,19 @@ class _StartScreenState extends State<StartScreen>
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
             ),
-           const Text(
+            const Text(
               "MBooking hello!",
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800),
             ),
-           const SizedBox(
-              height: 10,
+             SizedBox(
+              height: 10.h,
             ),
-           const Text(
+            const Text(
               "Enjoy your favorite movies",
               style: TextStyle(fontWeight: FontWeight.w400),
             ),
-           const SizedBox(
-              height: 10,
+             SizedBox(
+              height: 10.h,
             ),
             TabPageSelector(
               controller: TabController(
@@ -93,7 +94,7 @@ class _StartScreenState extends State<StartScreen>
                 vsync: this,
                 initialIndex: currentindex,
               ),
-              selectedColor: Color(0xFFFCC434),
+              selectedColor: const Color(0xFFFCC434),
               color: secondaryColor,
               borderStyle: BorderStyle.none,
               indicatorSize: 8.0,
@@ -103,25 +104,32 @@ class _StartScreenState extends State<StartScreen>
             ),
             InkWell(
                 onTap: () {
-
-                }, child: SvgPicture.asset("assets/sign in.svg")),
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginIn()));
+                },
+                child: SvgPicture.asset("assets/sign in.svg")),
             InkWell(
                 onTap: () {
-                   Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) =>const SignUp()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const SignUp()));
                 },
                 child: SvgPicture.asset("assets/sign up button.svg")),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
-           const Text(
+            const Text(
               "By sign in or sign up, you agree to our Terms  of Service",
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500,color: Colors.grey),
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey),
             ),
-           const Text("and privacy policy",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500,color: Colors.grey)),
+            const Text("and privacy policy",
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey)),
           ],
-          
         ),
       ),
     );

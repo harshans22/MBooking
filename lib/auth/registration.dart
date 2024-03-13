@@ -35,11 +35,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       isloading = true;
     });
 
-    // String res = await AuthMethods().signUpUser(
-    //     email: _emailController.text,
-    //     password: _passwordController.text,
-    //     name: _nameController.text,
-    //     city: _cityController.text);
+    String res = await AuthMethods().signUpUser(
+        email: _emailController.text,
+        password: _passwordController.text,
+        name: _nameController.text,
+        city: _cityController.text);
     try {
       var usersnapshot = await FirebaseFirestore.instance
           .collection("Users")
@@ -56,17 +56,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     setState(() {
       isloading = false;
     });
-    // if (res != "success") {
-    //   // in authmethods we are making res =success if authentication is successfull
-    //   showSnackBar(res, context);
-    // } else {
-    //   showSnackBar("Registered successfuly", context);
-    //   Navigator.of(context).push(MaterialPageRoute(
-    //     builder: (context) => Homescreen(
-    //       name: name,
-    //     ),
-    //   ));
-   // }
+    if (res != "success") {
+      // in authmethods we are making res =success if authentication is successfull
+      showSnackBar(res, context);
+    } else {
+      showSnackBar("Registered successfuly", context);
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => Homescreen(
+          name: name,
+        ),
+      ));
+    }
   }
 
   @override
