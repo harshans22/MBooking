@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:movieticket/provider/moviedetails.dart';
 import 'package:movieticket/screens/splashscreen.dart';
 import 'package:movieticket/utils/dimension.dart';
+import 'package:movieticket/utils/navbar.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:movieticket/utils/color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +17,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 //await FirebaseAppCheck.instance.activate();
- 
+
   runApp(const MyApp());
 }
 
@@ -27,7 +30,11 @@ class MyApp extends StatelessWidget {
         designSize: AppDimensions.screenSize,
         minTextAdapt: true,
         builder: (context, child) {
-          return MaterialApp(
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (_) => Movie()),
+            ],
+            child: MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: ThemeData.dark().copyWith(
                 scaffoldBackgroundColor:
@@ -53,10 +60,9 @@ class MyApp extends StatelessWidget {
 
               //       return const StartScreen();
               //     }),
-              home: SplashScreen(),
-                  );
+              home: Navbar(),
+            ),
+          );
         });
   }
 }
-
-

@@ -3,7 +3,7 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:movieticket/utils/color.dart";
 
-class ticketScreen extends StatefulWidget {
+class ticket extends StatefulWidget {
   final snap;
   final String theatre;
   final String time;
@@ -13,7 +13,7 @@ class ticketScreen extends StatefulWidget {
   final String theatreAdress;
   final String theatreicon;
   final String Orderid;
-  const ticketScreen({
+  const ticket({
     super.key,
     required this.date,
     required this.price,
@@ -27,10 +27,10 @@ class ticketScreen extends StatefulWidget {
   });
 
   @override
-  State<ticketScreen> createState() => _ticketScreenState();
+  State<ticket> createState() => _ticketScreenState();
 }
 
-class _ticketScreenState extends State<ticketScreen> {
+class _ticketScreenState extends State<ticket> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

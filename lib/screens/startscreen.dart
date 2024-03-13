@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movieticket/screens/auth/signin.dart';
-import 'package:movieticket/screens/auth/signup.dart';
+import 'package:movieticket/auth/signin.dart';
+import 'package:movieticket/auth/signup.dart';
 import 'package:movieticket/utils/color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movieticket/widgets/bottomsheet.dart';

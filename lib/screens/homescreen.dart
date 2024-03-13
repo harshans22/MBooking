@@ -1,14 +1,17 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movieticket/screens/startscreen.dart';
+import 'package:movieticket/skeleton/movie_card_skeleton(homescreen).dart';
 import 'package:movieticket/utils/color.dart';
 import 'package:movieticket/widgets/coming_soon.dart';
 import 'package:movieticket/widgets/movie_card(homeScreen).dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Homescreen extends StatefulWidget {
   final String name;
@@ -19,11 +22,22 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
-  @override
+  bool _isloading = true;//for skeleton loader
+
+   @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 4), () {
+      setState(() {
+        _isloading = false;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    print("rebuld");
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
         title: Column(
@@ -31,7 +45,7 @@ class _HomescreenState extends State<Homescreen> {
           children: [
             Text(
               'Hi, ${widget.name} 👋',
-              style:const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
             ),
             const SizedBox(
               height: 4,
@@ -47,8 +61,8 @@ class _HomescreenState extends State<Homescreen> {
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
                 if (context.mounted) {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) =>const StartScreen()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const StartScreen()));
                 }
               },
               icon: SvgPicture.asset("assets/notification.svg")),
@@ -93,12 +107,13 @@ class _HomescreenState extends State<Homescreen> {
                   )),
                   TextButton(
                     onPressed: () {},
-                    child: const Text("See all >",
-                        style: TextStyle(
-                            color: appthemecolor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400),
-                            ),
+                    child: const Text(
+                      "See all >",
+                      style: TextStyle(
+                          color: appthemecolor,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400),
+                    ),
                   ),
                 ],
               ),
@@ -110,10 +125,11 @@ class _HomescreenState extends State<Homescreen> {
                 builder: (context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                         snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                  if (snapshot.connectionState == ConnectionState.waiting||_isloading) {
+                    return Shimmer.fromColors(
+                        baseColor: const Color.fromARGB(255, 47, 47, 47),
+                        highlightColor: Color.fromARGB(255, 92, 91, 91),
+                        child:const SkeletonMovieCard());
                   }
                   return CarouselSlider(
                     options: CarouselOptions(
@@ -154,7 +170,6 @@ class _HomescreenState extends State<Homescreen> {
                 ],
               ),
             ),
-
             StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection("coming soon")

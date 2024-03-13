@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:movieticket/screens/auth/registration.dart';
+import 'package:movieticket/auth/registration.dart';
 import 'package:movieticket/screens/homescreen.dart';
 import 'package:movieticket/utils/color.dart';
 import 'package:movieticket/utils/pickimage.dart';
