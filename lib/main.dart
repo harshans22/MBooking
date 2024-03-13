@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor:
               mobileBackgroundColor, //copywith used to set theme for selected widget
         ),
-          home: const Homescreen(),
+          home: const Homescreen(name: 'hhd',),
         );
       },
     );

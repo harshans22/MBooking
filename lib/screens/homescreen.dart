@@ -8,7 +8,7 @@ import 'package:movieticket/widgets/movie_card(homeScreen).dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class Homescreen extends StatefulWidget {
-  const Homescreen({super.key});
+  const Homescreen({super.key, required String name});
 
   @override
   State<Homescreen> createState() => _HomescreenState();
