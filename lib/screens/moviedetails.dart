@@ -3,10 +3,12 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:movieticket/provider/moviedetails.dart';
 import "package:movieticket/screens/seatselection.dart";
 import "package:movieticket/utils/color.dart";
 import "package:movieticket/utils/pickimage.dart";
 import 'package:readmore/readmore.dart';
+import 'package:provider/provider.dart';
 
 class Moviedetails extends StatefulWidget {
   final snap;
@@ -17,14 +19,18 @@ class Moviedetails extends StatefulWidget {
 }
 
 class _MoviedetailsState extends State<Moviedetails> {
-  int cinemaindex = -1;
-  bool theatreselected = false;
+  // int cinemaindex = -1;
+  bool _theatreselected = false;
   String theatrename = "";
   String theatreaddress = "";
   String theatreIcon = "";
 
   @override
   Widget build(BuildContext context) {
+    print("again");
+    print("again2");
+    final provider = Provider.of<Movie>(context, listen: false);
+   // int cinemaindex = Provider.of<Movie>(context,listen: false).cinema;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -394,82 +400,86 @@ class _MoviedetailsState extends State<Moviedetails> {
                                 return Padding(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 8.0),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      cinemaindex = index;
-                                      theatrename = snapshot
-                                          .data!.docs[cinemaindex]["name"];
-                                      theatreaddress = snapshot
-                                          .data!.docs[cinemaindex]["address"];
-                                      theatreIcon = snapshot
-                                          .data!.docs[cinemaindex]["logo"];
-                                      theatreselected = true;
-                                      setState(() {});
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: cinemaindex == index
-                                              ? appthemecolor
-                                              : Colors.transparent,
-                                        ),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(10)),
-                                        color: cinemaindex == index
-                                            ? appthemecolor.withOpacity(0.2)
-                                            : greycolorshade1,
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  snapshot.data!.docs[index]
-                                                      ["name"],
-                                                  style: const TextStyle(
-                                                      fontSize: 17,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                              ),
-                                              ClipRRect(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(5)),
-                                                  child: Image.network(
-                                                    snapshot.data!.docs[index]
-                                                        ["logo"],
-                                                    height: 30.h,
-                                                    width: 40.w,
-                                                    fit: BoxFit.fill,
-                                                  ))
-                                            ],
+                                  child: Consumer<Movie>(
+                                    builder: (context, value, child) =>
+                                        GestureDetector(
+                                      onTap: () {
+                                        provider.selectcinema(index);
+                                        theatrename = snapshot
+                                            .data!.docs[value.cinemaindex]["name"];
+                                        theatreaddress = snapshot
+                                            .data!.docs[value.cinemaindex]["address"];
+                                        theatreIcon = snapshot
+                                            .data!.docs[value.cinemaindex]["logo"];
+                                        _theatreselected = true;
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: value.cinemaindex == index
+                                                ? appthemecolor
+                                                : Colors.transparent,
                                           ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                snapshot.data!.docs[index]
-                                                        ["distance"] +
-                                                    'km' +
-                                                    "  |   ",
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 11),
-                                              ),
-                                              Text(
-                                                snapshot.data!.docs[index]
-                                                    ["address"],
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 11),
-                                              )
-                                            ],
-                                          )
-                                        ],
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(10)),
+                                          color: value.cinemaindex == index
+                                              ? appthemecolor.withOpacity(0.2)
+                                              : greycolorshade1,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    snapshot.data!.docs[index]
+                                                        ["name"],
+                                                    style: const TextStyle(
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                ),
+                                                ClipRRect(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            Radius.circular(5)),
+                                                    child: Image.network(
+                                                      snapshot.data!.docs[index]
+                                                          ["logo"],
+                                                      height: 30.h,
+                                                      width: 40.w,
+                                                      fit: BoxFit.fill,
+                                                    ))
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  snapshot.data!.docs[index]
+                                                          ["distance"] +
+                                                      'km' +
+                                                      "  |   ",
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 11),
+                                                ),
+                                                Text(
+                                                  snapshot.data!.docs[index]
+                                                      ["address"],
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 11),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -481,7 +491,7 @@ class _MoviedetailsState extends State<Moviedetails> {
                     //movieticket button
                     GestureDetector(
                       onTap: () {
-                        if (theatreselected) {
+                        if (_theatreselected) {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => SeatSelection(
                                     snap: widget.snap,

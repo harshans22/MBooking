@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:movieticket/screens/tikcet.dart';
+import 'package:movieticket/widgets/tikcet.dart';
 import 'package:upi_india/upi_india.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -518,7 +518,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ticketScreen(
+                          builder: (context) => ticket(
                                 date: widget.date,
                                 price: widget.amount,
                                 snap: widget.snap,

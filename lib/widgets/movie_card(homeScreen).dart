@@ -14,7 +14,7 @@ class _MoviecardState extends State<Moviecard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: mobileBackgroundColor,
+     // color: mobileBackgroundColor,
       child: Column(
         children: [
           Padding(
@@ -25,11 +25,13 @@ class _MoviecardState extends State<Moviecard> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.network(
-                  widget.snap["Poster"],
+                child: SizedBox(
                   height: 300.h,
-                  width: 220.w,
-                  fit: BoxFit.fill,
+                    width: 220.w,
+                  child: Image.network(
+                    widget.snap["Poster"],
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),
