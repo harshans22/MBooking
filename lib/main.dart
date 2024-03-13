@@ -5,10 +5,10 @@ import 'package:movieticket/provider/moviedetails.dart';
 import 'package:movieticket/screens/splashscreen.dart';
 import 'package:movieticket/utils/dimension.dart';
 import 'package:movieticket/utils/navbar.dart';
-import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:movieticket/utils/color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

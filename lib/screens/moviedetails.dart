@@ -10,6 +10,7 @@ import "package:movieticket/utils/pickimage.dart";
 import 'package:readmore/readmore.dart';
 import 'package:provider/provider.dart';
 
+
 class Moviedetails extends StatefulWidget {
   final snap;
   const Moviedetails({super.key, required this.snap});
