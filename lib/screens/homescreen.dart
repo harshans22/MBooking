@@ -35,7 +35,7 @@ class _HomescreenState extends State<Homescreen> {
   }
   @override
   Widget build(BuildContext context) {
-    print("rebuld");
+    print("rebuild home");
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

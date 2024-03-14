@@ -18,41 +18,41 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> {
- PersistentTabController _controller=PersistentTabController(initialIndex: 0);
+ PersistentTabController _controller= PersistentTabController(initialIndex: 0);
 
 
 
    List<Widget> _buildScreens() {
         return [
-          Homescreen(name:"harsg" ,),
-          TicketScreen(),
-          EventsScreen(),
-          ProfileScreen()
+        const  Homescreen(name:"harsg" ,),
+        const  TicketScreen(),
+        const  EventsScreen(),
+        const  ProfileScreen()
         ];
     }
 
    List<PersistentBottomNavBarItem> _navBarsItems() {
         return [
             PersistentBottomNavBarItem(
-                icon: Icon(CupertinoIcons.home),
+                icon:const Icon(CupertinoIcons.home),
                 title: ("Home"),
                 activeColorPrimary: appthemecolor,
                 inactiveColorPrimary: CupertinoColors.systemGrey,
             ),
             PersistentBottomNavBarItem(
-                icon: Icon(CupertinoIcons.ticket),
+                icon:const Icon(CupertinoIcons.ticket),
                 title: ("Tickets"),
                 activeColorPrimary: appthemecolor,
                 inactiveColorPrimary: CupertinoColors.systemGrey,
             ),
             PersistentBottomNavBarItem(
-                icon: Icon(CupertinoIcons.video_camera),
+                icon:const Icon(CupertinoIcons.video_camera),
                 title: ("Live events"),
                 activeColorPrimary: appthemecolor,
                 inactiveColorPrimary: CupertinoColors.systemGrey,
             ),
             PersistentBottomNavBarItem(
-                icon: Icon(CupertinoIcons.person),
+                icon:const Icon(CupertinoIcons.person),
                 title: ("Profile"),
                 activeColorPrimary: appthemecolor,
                 inactiveColorPrimary: CupertinoColors.systemGrey,
@@ -82,11 +82,11 @@ class _NavbarState extends State<Navbar> {
         popActionScreens: PopActionScreensType.all,
         itemAnimationProperties: ItemAnimationProperties( // Navigation Bar's items animation properties.
           duration: Duration(milliseconds: 200),
-          curve: Curves.ease,
+          curve: Curves.easeInOut,
         ),
         screenTransitionAnimation: ScreenTransitionAnimation( // Screen transition animation on change of selected tab.
           animateTabTransition: true,
-          curve: Curves.ease,
+          curve: Curves.easeInOut,
           duration: Duration(milliseconds: 200),
         ),
         navBarStyle: NavBarStyle.style1, // Choose the nav bar style with this property.

@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         builder: (context, child) {
           return MultiProvider(
             providers: [
-              ChangeNotifierProvider(create: (_) => Movie()),
+              ChangeNotifierProvider(create: (context) => Movie()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
