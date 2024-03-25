@@ -64,7 +64,10 @@ class _NavbarState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
+      
         context,
+      //  padding: NavBarPadding.symmetric(vertical: 20),
+   
         controller: _controller,
         screens: _buildScreens(),
         items: _navBarsItems(),
@@ -75,8 +78,9 @@ class _NavbarState extends State<Navbar> {
       //  stateManagement: false, // Default is true.
         hideNavigationBarWhenKeyboardShows: true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
         decoration: NavBarDecoration(
+        //  border: Border.all(color: appthemecolor),
           borderRadius: BorderRadius.circular(10.0),
-          colorBehindNavBar: Colors.transparent,
+         // colorBehindNavBar: Colors.transparent,
         ),
         popAllScreensOnTapOfSelectedTab: true,
         popActionScreens: PopActionScreensType.all,

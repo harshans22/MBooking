@@ -35,7 +35,7 @@ class _HomescreenState extends State<Homescreen> {
   }
   @override
   Widget build(BuildContext context) {
-    print("rebuild home");
+   
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -128,7 +128,7 @@ class _HomescreenState extends State<Homescreen> {
                   if (snapshot.connectionState == ConnectionState.waiting||_isloading) {
                     return Shimmer.fromColors(
                         baseColor: const Color.fromARGB(255, 47, 47, 47),
-                        highlightColor: Color.fromARGB(255, 92, 91, 91),
+                        highlightColor: const Color.fromARGB(255, 92, 91, 91),
                         child:const SkeletonMovieCard());
                   }
                   return CarouselSlider(
