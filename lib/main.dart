@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("main");
     return ScreenUtilInit(
         designSize: AppDimensions.screenSize,
         minTextAdapt: true,
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
 
               //       return const StartScreen();
               //     }),
-              home: Navbar(),
+              home: const SplashScreen(),
             ),
           );
         });

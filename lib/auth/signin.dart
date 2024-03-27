@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movieticket/methods/authfunctions.dart';
 import 'package:movieticket/screens/homescreen.dart';
 import 'package:movieticket/utils/color.dart';
+import 'package:movieticket/utils/navbar.dart';
 import 'package:movieticket/utils/pickimage.dart';
 import 'package:movieticket/widgets/text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -49,7 +50,7 @@ class _LoginInState extends State<LoginIn> {
     });
     if (res == "success") {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => Homescreen(
+          builder: (context) => Navbar(
                 name: name,
               )));
     } else {

@@ -163,7 +163,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                           .signInWithCredential(credential)
                           .then((value) {
                         showSnackBar("OTP verified successfully", context);
-                        return Navigator.push(
+                        return Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const RegistrationScreen()));

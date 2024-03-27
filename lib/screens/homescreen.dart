@@ -37,7 +37,7 @@ class _HomescreenState extends State<Homescreen> {
   Widget build(BuildContext context) {
    
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+    // resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
         title: Column(
@@ -62,7 +62,7 @@ class _HomescreenState extends State<Homescreen> {
                 await FirebaseAuth.instance.signOut();
                 if (context.mounted) {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const StartScreen()));
+                      builder: (context) => const StartScreen(),),);
                 }
               },
               icon: SvgPicture.asset("assets/notification.svg")),
@@ -286,7 +286,7 @@ class _HomescreenState extends State<Homescreen> {
                   );
                 }),
             //movie news
-
+        
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(

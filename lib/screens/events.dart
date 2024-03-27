@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movieticket/utils/color.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:pinput/pinput.dart';
 
 class EventsScreen extends StatefulWidget {
   const EventsScreen({super.key});
@@ -39,6 +40,11 @@ class _EventsScreenState extends State<EventsScreen> {
         "color": const Color.fromARGB(255, 0, 255, 8),
         "image": "assets/everyone choice.png"
       },
+    ];
+    List<Map<String, dynamic>> sports = [
+      {"name": "CRICKET", "image": "assets/batsman.png", "number": "6"},
+      {"name": "FOOTBALL", "image": "assets/football.png", "number": "4"},
+      {"name": "RUNNING", "number": "2", "image": "assets/running.png"},
     ];
     return Scaffold(
       appBar: AppBar(
@@ -131,8 +137,7 @@ class _EventsScreenState extends State<EventsScreen> {
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: ((context, index) {
                             return Padding(
-                              padding:
-                                   EdgeInsets.symmetric(horizontal: 10.w),
+                              padding: EdgeInsets.symmetric(horizontal: 10.w),
                               child: Container(
                                 width: 310.w,
                                 decoration: BoxDecoration(
@@ -151,18 +156,19 @@ class _EventsScreenState extends State<EventsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      padding:  EdgeInsets.all(10.h),
+                                      padding: EdgeInsets.all(10.h),
                                       height: 100.h,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
                                         color: appthemecolor.withOpacity(0.45),
                                         borderRadius:
-                                             BorderRadiusDirectional.only(
+                                            BorderRadiusDirectional.only(
                                                 topStart: Radius.circular(10.r),
                                                 topEnd: Radius.circular(10.r),
                                                 bottomStart:
                                                     Radius.circular(20.r),
-                                                bottomEnd: Radius.circular(20.r)),
+                                                bottomEnd:
+                                                    Radius.circular(20.r)),
                                       ),
                                       child: Column(
                                         children: [
@@ -255,7 +261,6 @@ class _EventsScreenState extends State<EventsScreen> {
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w500,
-
                                                           color: const Color
                                                               .fromARGB(
                                                               255, 15, 15, 15),
@@ -298,13 +303,15 @@ class _EventsScreenState extends State<EventsScreen> {
                                                         FontWeight.w500)),
                                           ])),
                                           Container(
-                                            padding:  EdgeInsets.symmetric(
-                                                horizontal: 15.w, vertical: 10.h),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 15.w,
+                                                vertical: 10.h),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: appthemecolor),
                                                 borderRadius:
-                                                    BorderRadius.circular(10.r)),
+                                                    BorderRadius.circular(
+                                                        10.r)),
                                             child: const Text(
                                               "Book Now",
                                               style: TextStyle(
@@ -324,8 +331,6 @@ class _EventsScreenState extends State<EventsScreen> {
 
               //things to do in your city
 
-
-              
               SizedBox(
                 height: 30.h,
               ),
@@ -515,94 +520,91 @@ class _EventsScreenState extends State<EventsScreen> {
                 height: 30.h,
               ),
 
-
-
               // filling fast
-
-
 
               Text(
                 "Choices Vast But Filling Fast",
                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
               ),
-              SizedBox(height: 5.h,),
+              SizedBox(
+                height: 5.h,
+              ),
               Text(
                 "Hurry, explore range of our fun events",
                 style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400),
               ),
-              SizedBox(height: 5.h,),
+              SizedBox(
+                height: 5.h,
+              ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: [
-                    ...List.generate(
-                      list1.length,
-                      (index) => Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        //  decoration: BoxDecoration( color: Colors.white,
-                        //   borderRadius: BorderRadius.circular(20)
-                        //  ),
-                        height: 150.h,
-                        width: 140.w,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              top: 20,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color:
-                                        list1[index]["color"].withOpacity(0.5),
-                                    borderRadius: BorderRadius.circular(20)),
-                                height: 120.h,
-                                width: 140.w,
+                  children: List.generate(
+                    list1.length,
+                    (index) => Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      //  decoration: BoxDecoration( color: Colors.white,
+                      //   borderRadius: BorderRadius.circular(20)
+                      //  ),
+                      height: 150.h,
+                      width: 140.w,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 20,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: list1[index]["color"].withOpacity(0.5),
+                                  borderRadius: BorderRadius.circular(20)),
+                              height: 120.h,
+                              width: 140.w,
+                            ),
+                          ),
+                          Positioned(
+                              top: -10,
+                              right: -25,
+                              bottom: 15,
+                              child: Image.asset(
+                                list1[index]["image"],
+                                height: 130.h,
+                                width: 150.w,
+                                fit: BoxFit.fill,
+                              )),
+                          Positioned(
+                            left: 0.5,
+                            bottom: 5,
+                            child: Container(
+                              height: 90.h,
+                              width: 140.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                gradient: LinearGradient(
+                                    colors: [
+                                      list1[index]["color"],
+                                      list1[index]["color"].withOpacity(0.0),
+                                    ],
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter),
                               ),
                             ),
-                            Positioned(
-                                top: -10,
-                                right: -25,
-                                bottom: 15,
-                                child: Image.asset(
-                                  list1[index]["image"],
-                                  height: 130.h,
-                                  width: 150.w,
-                                  fit: BoxFit.fill,
-                                )),
-                            Positioned(
-                              left: 0.5,
-                              bottom: 5,
-                              child: Container(
-                                height: 90.h,
-                                width: 140.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  gradient: LinearGradient(
-                                      colors: [
-                                        list1[index]["color"],
-                                        list1[index]["color"].withOpacity(0.0),
-                                      ],
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter),
-                                ),
+                          ),
+                          Positioned(
+                            bottom: 20,
+                            left: 10,
+                            child: Text(
+                              list1[index]["name"],
+                              style: TextStyle(
+                                fontFamily: 'MyCustomFont',
+                                color: primaryColor,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                            Positioned(
-                              bottom: 20,
-                              left: 10,
-                              child: Text(
-                                list1[index]["name"],
-                                style: TextStyle(
-                                  fontFamily: 'MyCustomFont',
-                                  color: primaryColor,
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
 
@@ -610,77 +612,225 @@ class _EventsScreenState extends State<EventsScreen> {
                 height: 30.h,
               ),
 
-
               //more to sports
 
               Container(
                 width: double.infinity,
                 color: greycolorshade1,
                 child: Padding(
-                  padding:  EdgeInsets.all(10.h),
+                  padding: EdgeInsets.all(10.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("There is more to Sports",style: TextStyle(fontSize: 17.sp,fontWeight: FontWeight.w600),),
-                      SizedBox(height: 5.h,),
-                      Text("Get started",style: TextStyle(fontSize: 12.sp,fontWeight: FontWeight.w400),),
-                      SizedBox(height: 20.h,),
+                      Text(
+                        "There is more to Sports",
+                        style: TextStyle(
+                            fontSize: 17.sp, fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      Text(
+                        "Get started",
+                        style: TextStyle(
+                            fontSize: 12.sp, fontWeight: FontWeight.w400),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
                       Container(
-                       // color: Colors.white,
-                        child: Stack(
-                          alignment: Alignment.bottomRight,
-                          children: [
-                            Container(
-                              height: 120.h,
-                              width: 120.w,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.r),
-                                gradient:const LinearGradient(
-                                   begin: Alignment.bottomLeft,
-                                   end: Alignment.topRight,
-                                  colors: [ Color.fromARGB(172, 78, 169, 243),Color.fromARGB(146, 71, 52, 133)],
-                                  )
-                              ),
-                            ),
-                            ClipPath(
-                              clipper: Clip(),
-                              child: Container(
-                                height: 120.h,
-                                width: 120.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  gradient:const LinearGradient(
-                                    begin: Alignment.bottomLeft,
-                                    end: Alignment.topRight,
-                                    
-                                    colors: [Color.fromARGB(255, 30, 98, 153),Color.fromARGB(255, 199, 225, 247)]),
-                                 // color: const Color.fromARGB(255, 103, 178, 239),
+                        // color: Colors.white,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: List.generate(
+                              sports.length,
+                              (index) => Padding(
+                                padding: EdgeInsets.only(right: 18.w),
+                                child: Stack(
+                                  alignment: Alignment.bottomRight,
+                                  children: [
+                                    Container(
+                                      height: 120.h,
+                                      width: 120.w,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20.r),
+                                          gradient: const LinearGradient(
+                                            begin: Alignment.bottomLeft,
+                                            end: Alignment.topRight,
+                                            colors: [
+                                              Color.fromARGB(172, 78, 169, 243),
+                                              Color.fromARGB(146, 71, 52, 133)
+                                            ],
+                                          )),
+                                    ),
+                                    ClipPath(
+                                      clipper: Clip(),
+                                      child: Container(
+                                        height: 120.h,
+                                        width: 120.w,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20.r),
+                                          gradient: const LinearGradient(
+                                              begin: Alignment.bottomLeft,
+                                              end: Alignment.topRight,
+                                              colors: [
+                                                Color.fromARGB(
+                                                    255, 30, 98, 153),
+                                                Color.fromARGB(
+                                                    255, 199, 225, 247)
+                                              ]),
+                                          // color: const Color.fromARGB(255, 103, 178, 239),
+                                        ),
+                                      ),
+                                    ),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(20.r),
+                                      child: SizedBox(
+                                        height: 120.h,
+                                        width: 100.w,
+                                        child: Image.asset(
+                                          sports[index]["image"],
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 120.h,
+                                      width: 120.w,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20.r),
+                                          gradient: LinearGradient(
+                                              begin: Alignment.bottomLeft,
+                                              end: Alignment.topCenter,
+                                              colors: [
+                                                Color.fromARGB(255, 0, 192, 251)
+                                                    .withOpacity(0.5),
+                                                Color.fromARGB(
+                                                        249, 110, 166, 199)
+                                                    .withOpacity(0.0)
+                                              ])),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(left: 10.w),
+                                      height: 120.h,
+                                      width: 120.w,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Flexible(flex: 5, child: Container()),
+                                          Text(
+                                            sports[index]["name"],
+                                            style: TextStyle(
+                                              fontFamily: 'MyCustomFont',
+                                              color: primaryColor,
+                                              fontSize: 18.sp,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          Text(
+                                            "${sports[index]["number"]} EVENTS",
+                                            style: TextStyle(
+                                              fontFamily: 'MyCustomFont',
+                                              color: primaryColor,
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          Flexible(flex: 1, child: Container()),
+                                        ],
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20.r),
-                              child: SizedBox(
-                                height: 120.h,
-                                width: 100.w,
-                                child: Image.asset("assets/batsman.png",fit: BoxFit.cover,),),
-                            ),
-                              Container(     
-                                height: 120.h,
-                              width: 120.w,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.r),
-                                gradient: LinearGradient(
-                                  
-                                  begin: Alignment.bottomCenter,
-                                  end:Alignment.topCenter ,
-                                  colors: [Color.fromARGB(255, 0, 192, 251).withOpacity(0.5),Color.fromARGB(249, 110, 166, 199).withOpacity(0.0)])
-                              ),
-                              ),
-                          ],
+                          ),
                         ),
                       ),
-                      SizedBox(height: 10.h,)
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      //break
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            "View All >",
+                            style: TextStyle(
+                                fontSize: 15.sp, fontWeight: FontWeight.w400),
+                          )),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection("events")
+                              .doc("sports")
+                              .get(),
+                          builder: (context, snapshot) {
+                            return SizedBox(
+                              height: 340.h,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: false,
+                                itemCount: snapshot.data!["items"].length,
+                                itemBuilder: (context, index) => Padding(
+                                  padding: EdgeInsets.only(right: 15.w),
+                                  child: Container(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(5.r),
+                                          child: SizedBox(
+                                            height: 250.h,
+                                            width: 130.w,
+                                            child: Image.network(
+                                              snapshot.data!["items"][index]
+                                                  ["logo"],
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 5.h,
+                                        ),
+                                        SizedBox(
+                                            width: 130.w,
+                                            child: Text(
+                                              '${snapshot.data!["items"][index]["title"]}',
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            )),
+                                            SizedBox(
+                                          height: 5.h,
+                                        ),
+                                        Text('₹ ${
+                                          snapshot.data!["items"][index]
+                                              ["price"]
+                                        } onwards',style: TextStyle(fontSize: 12.sp,color: const Color.fromARGB(255, 184, 183, 183)),),
+                                        SizedBox(
+                                          height: 5.h,
+                                        ),
+                                        Text('${
+                                          snapshot.data!["items"][index]
+                                              ["type"]
+                                        }',style: TextStyle(fontSize: 12.sp,color: const Color.fromARGB(255, 184, 183, 183)),),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          })
                     ],
                   ),
                 ),
@@ -698,11 +848,10 @@ class Clip extends CustomClipper<Path> {
   Path getClip(Size size) {
     var path = Path();
     path.moveTo(0, 0); // Top left-point
-    path.lineTo(0, size.height*0.8); // Bottom-left point
-    path.lineTo(size.width*0.4, size.height/3); // Bottom-right point
-    path.lineTo(size.width*0.25, 0); // Bottom-right point
+    path.lineTo(0, size.height * 0.8); // Bottom-left point
+    path.lineTo(size.width * 0.4, size.height / 3); // Bottom-right point
+    path.lineTo(size.width * 0.25, 0); // Bottom-right point
     path.close(); // Close the path to form a triangle
-   
 
     return path;
   }

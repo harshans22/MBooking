@@ -1,7 +1,13 @@
+import "dart:io";
+
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:movieticket/utils/color.dart";
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ticket extends StatefulWidget {
   final snap;
@@ -31,6 +37,28 @@ class ticket extends StatefulWidget {
 }
 
 class _ticketScreenState extends State<ticket> {
+  void download() async {
+    final pdf = pw.Document();
+
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) => pw.Center(
+          child: pw.Text('Hello World!'),
+        ),
+      ),
+    );
+
+
+  final outPut = await getDownloadsDirectory();
+  final bytes = await pdf.save(); // Await the result of pdf.save()
+  String path = outPut!.path + '/example.pdf';
+  final file = File(path);
+  await file.writeAsBytes(bytes); // Await the write operation
+  print(outPut);
+
+  //await file.writeAsBytes(bytes);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +66,18 @@ class _ticketScreenState extends State<ticket> {
         backgroundColor: mobileBackgroundColor,
         title: const Text("My Ticket"),
         centerTitle: true,
+        actions: [
+          // IconButton(
+          //     onPressed: () {
+          //       try {
+          //         download();
+          //         print("success");
+          //       } catch (err) {
+          //         print(err.toString());
+          //       }
+          //     },
+          //     icon: Icon(Icons.download))
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -76,7 +116,7 @@ class _ticketScreenState extends State<ticket> {
                               ),
                               Text(
                                 widget.snap["moviename"],
-                                style:  TextStyle(
+                                style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w600),
@@ -95,7 +135,7 @@ class _ticketScreenState extends State<ticket> {
                                   ),
                                   Text(
                                       '${widget.snap["TimeInHours"]} hours ${widget.snap["TimeInMin"]} minutes',
-                                      style:  TextStyle(
+                                      style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 13.sp,
                                           fontWeight: FontWeight.w400))
@@ -118,7 +158,7 @@ class _ticketScreenState extends State<ticket> {
                                     child: Text(
                                         '${widget.snap["Type of movie"][0]}, ${widget.snap["Type of movie"][1]}',
                                         maxLines: 2,
-                                        style:  TextStyle(
+                                        style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 13.sp,
                                             fontWeight: FontWeight.w400)),
@@ -152,7 +192,7 @@ class _ticketScreenState extends State<ticket> {
                                   children: [
                                     Text(
                                       widget.time,
-                                      style:  TextStyle(
+                                      style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w500),
@@ -162,7 +202,7 @@ class _ticketScreenState extends State<ticket> {
                                     ),
                                     Text(
                                       '${widget.date}.02.2024',
-                                      style:  TextStyle(
+                                      style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w500),
@@ -185,7 +225,7 @@ class _ticketScreenState extends State<ticket> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                     Text(
+                                    Text(
                                       "Screen 4",
                                       style: TextStyle(
                                           color: Colors.black,
@@ -197,7 +237,7 @@ class _ticketScreenState extends State<ticket> {
                                     ),
                                     Row(
                                       children: [
-                                         Text(
+                                        Text(
                                           'Seat ',
                                           style: TextStyle(
                                               color: Colors.black,
@@ -208,7 +248,7 @@ class _ticketScreenState extends State<ticket> {
                                           widget.seat.length,
                                           (index) => Text(
                                             '${widget.seat[index]}, ',
-                                            style:  TextStyle(
+                                            style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.w500),
@@ -240,7 +280,7 @@ class _ticketScreenState extends State<ticket> {
                           ),
                           Text(
                             '₹${widget.price}.000',
-                            style:  TextStyle(
+                            style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16.sp),
@@ -268,7 +308,7 @@ class _ticketScreenState extends State<ticket> {
                                 children: [
                                   Text(
                                     widget.theatre,
-                                    style:  TextStyle(
+                                    style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 16.sp),
@@ -286,7 +326,7 @@ class _ticketScreenState extends State<ticket> {
                               ),
                               Text(
                                 widget.theatreAdress,
-                                style:  TextStyle(
+                                style: TextStyle(
                                     color: Colors.black, fontSize: 14.sp),
                               ),
                             ],
@@ -328,7 +368,10 @@ class _ticketScreenState extends State<ticket> {
                       ),
                       Text(
                         'Order ID: ${widget.Orderid}',
-                        style: const TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w400),
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400),
                       )
                     ],
                   ),

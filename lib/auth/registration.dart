@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movieticket/methods/authfunctions.dart';
+import 'package:movieticket/utils/navbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:movieticket/screens/homescreen.dart';
@@ -61,9 +62,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       showSnackBar(res, context);
     } else {
       showSnackBar("Registered successfuly", context);
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Homescreen(
-          name: name,
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => Navbar(
+          name: name
         ),
       ));
     }

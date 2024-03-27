@@ -105,7 +105,7 @@ class _StartScreenState extends State<StartScreen>
             InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginIn()));
+                      MaterialPageRoute(builder: (context) =>const LoginIn()));
                 },
                 child: SvgPicture.asset("assets/sign in.svg")),
             InkWell(
