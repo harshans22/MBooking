@@ -12,6 +12,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Center(
       child: Text("Under development"),
-    );;
+    );
   }
 }
